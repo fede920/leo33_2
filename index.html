@@ -9,7 +9,11 @@
 <body>
 
   <button id="giftBox" class="gift-box" aria-label="Apri regalo">
-    <div class="ribbon-bow"></div>
+    <div class="bow-container">
+      <div class="bow-loop left"></div>
+      <div class="bow-loop right"></div>
+      <div class="bow-knot"></div>
+    </div>
     
     <div class="ribbon-vertical"></div>
     <div class="ribbon-horizontal"></div>
@@ -21,7 +25,7 @@
 
   <div id="overlay" class="overlay">
     <button id="close" aria-label="Chiudi">✕</button>
-    <div id="tickets"></div>
+    <div id="tickets" class="tickets-content"></div>
   </div>
 
   <script src="js/script.js"></script>
