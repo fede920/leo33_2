@@ -32,16 +32,23 @@ const closeBtn = document.getElementById('close');
 const bgAudio = document.getElementById('bgAudio');
 
 giftBox.onclick = () => {
-  // 1. Nasconde il pacco regalo
+  // 1. Tenta subito di riprodurre l'audio (il click sblocca il browser)
+  bgAudio.currentTime = 0;
+  const playPromise = bgAudio.play();
+
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
+      console.log("Audio avviato con successo!");
+    }).catch(error => {
+      console.log("Errore nella riproduzione audio:", error);
+    });
+  }
+
+  // 2. Nasconde il pacco regalo
   giftBox.classList.add('hidden');
 
-  // 2. Fa apparire la locandina di sfondo
+  // 3. Fa apparire la locandina di sfondo
   document.body.classList.add('has-poster');
-
-  // 3. Fa partire immediatamente la canzone "Revolte" di Paul Kalkbrenner
-  bgAudio.play().catch(err => {
-    console.log("Riproduzione audio bloccata dal browser:", err);
-  });
 
   // 4. Prepara i biglietti con il link di download PDF
   ticketsContainer.innerHTML = '';
@@ -100,47 +107,3 @@ giftBox.onclick = () => {
     createConfetti();
   }, 5000);
 };
-
-// Quando si clicca sulla ✕:
-closeBtn.onclick = () => {
-  // Hide overlay
-  overlay.classList.remove('show');
-  
-  // Toglie la locandina
-  document.body.classList.remove('has-poster');
-
-  // Ferma e resetta l'audio
-  bgAudio.pause();
-  bgAudio.currentTime = 0;
-
-  // Ritorna al pacco regalo iniziale
-  giftBox.classList.remove('hidden');
-};
-
-// Generazione Coriandoli
-function createConfetti() {
-  const emojis = ['🎉', '✨', '🎊', '🎵', '🎸', '🎤', '⚡', '💫'];
-  for (let i = 0; i < 40; i++) {
-    const confetti = document.createElement('div');
-    confetti.className = 'confetti';
-    confetti.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-    confetti.style.left = Math.random() * 100 + '%';
-    confetti.style.top = '-10px';
-    
-    document.body.appendChild(confetti);
-    
-    const duration = Math.random() * 2.5 + 2;
-    const horizontalMove = (Math.random() - 0.5) * 300;
-    const rotation = Math.random() * 720;
-    
-    confetti.animate([
-      { transform: `translateY(0px) translateX(0px) rotate(0deg)`, opacity: 1 },
-      { transform: `translateY(${window.innerHeight + 50}px) translateX(${horizontalMove}px) rotate(${rotation}deg)`, opacity: 0 }
-    ], {
-      duration: duration * 1000,
-      easing: 'ease-in'
-    });
-    
-    setTimeout(() => confetti.remove(), duration * 1000);
-  }
-}
