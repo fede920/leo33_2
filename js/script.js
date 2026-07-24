@@ -9,7 +9,7 @@ const data = [
     location: '📍 FIERA DEL LEVANTE - ARENA DEL LEVANTE',
     tier: 'GA - TIER 1',
     status: 'Ingresso valido - ore 20:00<br><span style="font-size: 12px;">del giorno sabato 05 settembre</span>',
-    pdf: 'pdf/biglietto2.pdf'
+    pdf: 'pdf/biglietto1.pdf'
   },
   { 
     n: 2, 
@@ -21,7 +21,7 @@ const data = [
     location: '📍 FIERA DEL LEVANTE - ARENA DEL LEVANTE',
     tier: 'GA - TIER 1',
     status: 'Ingresso valido - ore 20:00<br><span style="font-size: 12px;">del giorno sabato 05 settembre</span>',
-    pdf: 'pdf/biglietto1.pdf'
+    pdf: 'pdf/biglietto2.pdf'
   }
 ];
 
@@ -32,25 +32,24 @@ const closeBtn = document.getElementById('close');
 const bgAudio = document.getElementById('bgAudio');
 
 giftBox.onclick = () => {
-  // 1. Tenta subito di riprodurre l'audio (il click sblocca il browser)
-  bgAudio.currentTime = 0;
+  // 1. Carica e avvia l'audio
+  bgAudio.load();
+  bgAudio.volume = 0.8;
   const playPromise = bgAudio.play();
 
   if (playPromise !== undefined) {
-    playPromise.then(() => {
-      console.log("Audio avviato con successo!");
-    }).catch(error => {
-      console.log("Errore nella riproduzione audio:", error);
+    playPromise.catch(error => {
+      console.log("Riproduzione audio non riuscita:", error);
     });
   }
 
-  // 2. Nasconde il pacco regalo
+  // 2. Nasconde il regalo
   giftBox.classList.add('hidden');
 
-  // 3. Fa apparire la locandina di sfondo
+  // 3. Mostra la locandina
   document.body.classList.add('has-poster');
 
-  // 4. Prepara i biglietti con il link di download PDF
+  // 4. Inserisce i biglietti
   ticketsContainer.innerHTML = '';
   const fragment = document.createDocumentFragment();
 
@@ -70,24 +69,26 @@ giftBox.onclick = () => {
         </div>
       </div>
       <div class="ticket-body">
-        <div class="ticket-info-row">
-          <div class="ticket-info-column">
-            <div class="ticket-info-label">Nome</div>
-            <div class="ticket-info-value">${x.name}</div>
+        <div>
+          <div class="ticket-info-row">
+            <div class="ticket-info-column">
+              <div class="ticket-info-label">Nome</div>
+              <div class="ticket-info-value">${x.name}</div>
+            </div>
+            <div class="ticket-info-column">
+              <div class="ticket-info-label">Sigillo Fiscale</div>
+              <div class="ticket-info-value">${x.sig}</div>
+            </div>
           </div>
-          <div class="ticket-info-column">
-            <div class="ticket-info-label">Sigillo Fiscale</div>
-            <div class="ticket-info-value">${x.sig}</div>
-          </div>
-        </div>
-        <div class="ticket-info-row">
-          <div class="ticket-info-column">
-            <div class="ticket-info-label">Tipologia biglietto</div>
-            <div class="ticket-info-value">${x.tier}</div>
-          </div>
-          <div class="ticket-info-column">
-            <div class="ticket-info-label">Stato</div>
-            <div class="ticket-info-value">${x.status}</div>
+          <div class="ticket-info-row">
+            <div class="ticket-info-column">
+              <div class="ticket-info-label">Tipologia biglietto</div>
+              <div class="ticket-info-value">${x.tier}</div>
+            </div>
+            <div class="ticket-info-column">
+              <div class="ticket-info-label">Stato</div>
+              <div class="ticket-info-value">${x.status}</div>
+            </div>
           </div>
         </div>
         <div class="ticket-footer">
@@ -101,9 +102,55 @@ giftBox.onclick = () => {
 
   ticketsContainer.appendChild(fragment);
 
-  // 5. Attende 5 secondi prima di mostrare l'overlay ed i coriandoli
+  // 5. Mostra l'overlay dopo 5 secondi
   setTimeout(() => {
     overlay.classList.add('show');
     createConfetti();
   }, 5000);
 };
+
+// Funzione Tasto Chiudi (✕)
+closeBtn.onclick = (e) => {
+  e.stopPropagation(); // Evita interferenze di click
+
+  // Nasconde l'overlay
+  overlay.classList.remove('show');
+  
+  // Rimuove la locandina
+  document.body.classList.remove('has-poster');
+
+  // Ferma l'audio e lo riporta all'inizio
+  bgAudio.pause();
+  bgAudio.currentTime = 0;
+
+  // Mostra di nuovo il pacco regalo
+  giftBox.classList.remove('hidden');
+};
+
+// Generazione Coriandoli
+function createConfetti() {
+  const emojis = ['🎉', '✨', '🎊', '🎵', '🎸', '🎤', '⚡', '💫'];
+  for (let i = 0; i < 40; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    confetti.style.left = Math.random() * 100 + '%';
+    confetti.style.top = '-10px';
+    
+    document.body.appendChild(confetti);
+    
+    const duration = Math.random() * 2.5 + 2;
+    const horizontalMove = (Math.random() - 0.5) * 300;
+    const rotation = Math.random() * 720;
+    
+    confetti.animate([
+      { transform: `translateY(0px) translateX(0px) rotate(0deg)`, opacity: 1 },
+      { transform: `translateY(${window.innerHeight + 50}px) translateX(${horizontalMove}px) rotate(${rotation}deg)`, opacity: 0 }
+    ], {
+      duration: duration * 1000,
+      easing: 'ease-in'
+    });
+    
+    setTimeout(() => confetti.remove(), duration * 1000);
+  }
+}
