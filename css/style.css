@@ -13,52 +13,71 @@ body {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  transition: background-image 0.5s ease-in-out;
+  transition: background-image 0.8s ease-in-out;
 }
 
 /* Sfondo della locandina attivo */
 body.has-poster {
-  background-image: url('../images/locandina.jfif'); /* Cambia in .jpg se necessario */
+  background-image: url('../images/locandina.jfif');
 }
 
-/* Pacco regalo in bianco e nero */
+/* Pulsante Pacco Regalo in B&N */
 .gift-box {
   position: relative;
-  font-size: 6rem;
-  background: #fff;
-  border: 4px solid #000;
-  border-radius: 16px;
-  padding: 1.5rem;
+  width: 140px;
+  height: 140px;
+  background: #ffffff;
+  border: 4px solid #000000;
+  border-radius: 20px;
   cursor: pointer;
-  filter: grayscale(100%); /* Trasforma tutto il bottone in Bianco e Nero */
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
   animation: float 3s ease-in-out infinite;
   transition: transform 0.3s ease, opacity 0.5s ease;
+  padding: 0;
+}
+
+.gift-box:hover {
+  transform: scale(1.05);
 }
 
 .gift-box.hidden {
   display: none;
 }
 
-/* Logo posizionato al centro sopra il pacco */
+/* Icona SVG del Pacco Regalo */
+.gift-svg {
+  width: 100px;
+  height: 100px;
+  color: #000000;
+}
+
+/* Logo LB perfettamente centrato e integrato */
 .gift-logo {
   position: absolute;
-  width: 50px;
-  height: 50px;
+  top: 58%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 38px;
+  height: 38px;
   object-fit: cover;
   border-radius: 50%;
-  border: 2px solid #000;
+  border: 2px solid #000000;
+  background-color: #ffffff;
+  z-index: 2;
 }
 
 /* Modale overlay */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.85);
   display: none;
   place-items: center;
+  z-index: 1000;
+  padding: 1rem;
 }
 
 .overlay.show {
@@ -67,15 +86,17 @@ body.has-poster {
 
 #tickets {
   display: grid;
-  gap: 1rem;
+  gap: 1.5rem;
+  max-width: 90vw;
 }
 
 .ticket {
   background: #fff;
   border-radius: 12px;
-  padding: 1rem;
-  min-width: 320px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  padding: 1.5rem;
+  min-width: 280px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  text-align: center;
 }
 
 .head {
@@ -83,20 +104,30 @@ body.has-poster {
   color: #fff;
   padding: 1rem;
   border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.head h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
 }
 
 #close {
-  position: absolute;
+  position: fixed;
   top: 20px;
   right: 20px;
-  font-size: 2rem;
+  font-size: 2.5rem;
   background: transparent;
   color: #fff;
   border: none;
   cursor: pointer;
+  z-index: 1001;
 }
 
 @keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
   50% {
     transform: translateY(-10px);
   }
