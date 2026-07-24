@@ -1,6 +1,6 @@
 :root {
   --primary: #c41e3a;
-  --bg-color: #0f0f12;
+  --bg-color: #0b0b0e;
 }
 
 * {
@@ -18,18 +18,18 @@ body {
   min-height: 100dvh;
   background-color: var(--bg-color);
   background-position: center center;
-  background-size: cover; /* Si adatta perfettamente sia su Desktop che su Mobile */
+  background-size: contain; /* Mantiene la locandina intera su Desktop e Mobile */
   background-repeat: no-repeat;
   transition: background-image 0.6s ease-in-out;
   overflow-x: hidden;
 }
 
-/* Sfondo Locandina */
+/* Sfondo Locandina con adattamento perfetto per Desktop */
 body.has-poster {
   background-image: url('../images/locandina.jfif');
 }
 
-/* --- DESIGN PACCO REGALO --- */
+/* --- PACCO REGALO --- */
 .gift-box {
   position: relative;
   width: 170px;
@@ -41,7 +41,7 @@ body.has-poster {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
   animation: float 3s ease-in-out infinite;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   outline: none;
@@ -50,14 +50,13 @@ body.has-poster {
 
 .gift-box:hover {
   transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
 }
 
 .gift-box.hidden {
   display: none;
 }
 
-/* Nastri Neri */
 .ribbon-vertical {
   position: absolute;
   top: 0;
@@ -80,7 +79,7 @@ body.has-poster {
   z-index: 1;
 }
 
-/* --- FIOCCO IN ALTO --- */
+/* Fiocco */
 .bow-container {
   position: absolute;
   top: -30px;
@@ -123,7 +122,6 @@ body.has-poster {
   z-index: 4;
 }
 
-/* Logo LB */
 .logo-wrapper {
   position: relative;
   z-index: 2;
@@ -145,12 +143,12 @@ body.has-poster {
   border-radius: 50%;
 }
 
-/* --- OVERLAY & BIGLIETTI RESPONSIVE --- */
+/* --- OVERLAY & BIGLIETTI --- */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.82);
-  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
   display: none;
   justify-content: center;
   align-items: center;
@@ -165,9 +163,9 @@ body.has-poster {
 
 .tickets-content {
   width: 100%;
-  max-width: 900px; /* Ampio per schermi grandi */
+  max-width: 900px;
   display: flex;
-  flex-direction: row; /* Affiancati su Desktop */
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   gap: 25px;
@@ -180,7 +178,7 @@ body.has-poster {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
   animation: popOut 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   width: 100%;
-  max-width: 400px; /* Dimensione fissa per singolo biglietto */
+  max-width: 400px;
 }
 
 .ticket:nth-child(2) {
@@ -196,33 +194,11 @@ body.has-poster {
   justify-content: space-between;
 }
 
-.ticket-header-left {
-  flex: 1;
-}
-
-.ticket-date {
-  font-size: 24px;
-  font-weight: 900;
-  margin-bottom: 6px;
-}
-
-.ticket-date-small {
-  font-size: 12px;
-  opacity: 0.9;
-  margin-bottom: 10px;
-}
-
-.ticket-title {
-  font-size: 16px;
-  font-weight: 900;
-  line-height: 1.2;
-}
-
-.ticket-location {
-  font-size: 11px;
-  margin-top: 8px;
-  opacity: 0.95;
-}
+.ticket-header-left { flex: 1; }
+.ticket-date { font-size: 24px; font-weight: 900; margin-bottom: 6px; }
+.ticket-date-small { font-size: 12px; opacity: 0.9; margin-bottom: 10px; }
+.ticket-title { font-size: 16px; font-weight: 900; line-height: 1.2; }
+.ticket-location { font-size: 11px; margin-top: 8px; opacity: 0.95; }
 
 .ticket-number-top {
   background: white;
@@ -244,37 +220,23 @@ body.has-poster {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #444;
 }
 
-.ticket-info-row:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
+.ticket-info-label { font-size: 11px; color: #999; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; }
+.ticket-info-value { font-size: 14px; font-weight: 900; color: white; }
+.ticket-info-column { flex: 1; }
+.ticket-info-column:nth-child(2) { flex: 1.5; }
 
-.ticket-info-label {
-  font-size: 11px;
-  color: #999;
-  font-weight: bold;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-
-.ticket-info-value {
-  font-size: 14px;
-  font-weight: 900;
-  color: white;
-}
-
-.ticket-info-column {
-  flex: 1;
-}
-
-.ticket-info-column:nth-child(2) {
-  flex: 1.5;
+.ticket-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #444;
 }
 
 .ticket-number-bottom {
@@ -282,6 +244,24 @@ body.has-poster {
   color: #999;
   text-transform: uppercase;
   font-weight: bold;
+}
+
+/* Pulsante Scarica PDF */
+.download-btn {
+  background-color: var(--primary);
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: bold;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+.download-btn:hover {
+  background-color: #e02446;
+  transform: scale(1.05);
 }
 
 #close {
@@ -303,9 +283,7 @@ body.has-poster {
   transition: transform 0.2s;
 }
 
-#close:hover {
-  transform: scale(1.1);
-}
+#close:hover { transform: scale(1.1); }
 
 .confetti {
   position: fixed;
@@ -315,14 +293,8 @@ body.has-poster {
 }
 
 @keyframes popOut {
-  0% {
-    opacity: 0;
-    transform: scale(0.3) translateY(-100px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
+  0% { opacity: 0; transform: scale(0.3) translateY(-100px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 @keyframes float {
@@ -330,19 +302,7 @@ body.has-poster {
   50% { transform: translateY(-12px); }
 }
 
-/* MEDIA QUERIES MOBILE */
 @media (max-width: 768px) {
-  body {
-    background-size: contain; /* Su mobile evita i tagli dell'immagine */
-  }
-
-  .tickets-content {
-    flex-direction: column; /* In colonna su schermi piccoli */
-    align-items: center;
-  }
-
-  .ticket-header {
-    flex-direction: column;
-    gap: 12px;
-  }
+  .tickets-content { flex-direction: column; align-items: center; }
+  .ticket-header { flex-direction: column; gap: 12px; }
 }
