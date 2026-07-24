@@ -12,10 +12,10 @@ giftBox.onclick = () => {
   // 1. Nasconde il pacco regalo
   giftBox.classList.add('hidden');
 
-  // 2. Imposta la locandina come sfondo del body
+  // 2. Fa apparire la locandina come sfondo del body
   document.body.classList.add('has-poster');
 
-  // 3. Genera il contenuto dei biglietti
+  // 3. Genera i biglietti nell'overlay
   ticketsContainer.innerHTML = '';
   const fragment = document.createDocumentFragment();
 
@@ -28,18 +28,20 @@ giftBox.onclick = () => {
         <strong>Biglietto #${x.n}</strong>
       </div>
       <p><b>${x.name}</b></p>
-      <p>Sigillo: ${x.sig}</p>
+      <p><small>Sigillo: ${x.sig}</small></p>
     `;
     fragment.appendChild(ticketDiv);
   });
 
   ticketsContainer.appendChild(fragment);
 
-  // 4. Attende 5 secondi (5000 ms) prima di mostrare i biglietti
+  // 4. Attende esattamente 5 secondi prima di far apparire i biglietti
   setTimeout(() => {
     overlay.classList.add('show');
   }, 5000);
 };
 
-// Pulsante per chiudere l'overlay
-closeBtn.onclick = () => overlay.classList.remove('show');
+// Pulsante per chiudere i biglietti
+closeBtn.onclick = () => {
+  overlay.classList.remove('show');
+};
