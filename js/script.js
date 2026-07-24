@@ -9,7 +9,7 @@ const data = [
     location: '📍 FIERA DEL LEVANTE - ARENA DEL LEVANTE',
     tier: 'GA - TIER 1',
     status: 'Ingresso valido - ore 20:00<br><span style="font-size: 12px;">del giorno sabato 05 settembre</span>',
-    pdf: 'pdf/biglietto1.pdf'
+    pdf: 'pdf/biglietto2.pdf'
   },
   { 
     n: 2, 
@@ -21,7 +21,7 @@ const data = [
     location: '📍 FIERA DEL LEVANTE - ARENA DEL LEVANTE',
     tier: 'GA - TIER 1',
     status: 'Ingresso valido - ore 20:00<br><span style="font-size: 12px;">del giorno sabato 05 settembre</span>',
-    pdf: 'pdf/biglietto2.pdf'
+    pdf: 'pdf/biglietto1.pdf'
   }
 ];
 
@@ -38,7 +38,7 @@ giftBox.onclick = () => {
   // 2. Fa apparire la locandina di sfondo
   document.body.classList.add('has-poster');
 
-  // 3. Fa partire immediatamente la canzone "Aaron" di Paul Kalkbrenner
+  // 3. Fa partire immediatamente la canzone "Revolte" di Paul Kalkbrenner
   bgAudio.play().catch(err => {
     console.log("Riproduzione audio bloccata dal browser:", err);
   });
