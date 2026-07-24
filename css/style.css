@@ -1,1 +1,103 @@
-:root{--primary:#c41e3a;--dark:#222}body{font-family:Arial,sans-serif;margin:0;display:grid;place-items:center;height:100vh}.gift-box{font-size:5rem;background:#fff;border:3px solid #000;border-radius:12px;padding:.5rem;cursor:pointer;animation:f 3s ease-in-out infinite}.overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;place-items:center}.overlay.show{display:grid}#tickets{display:grid;gap:1rem}.ticket{background:#fff;border-radius:12px;padding:1rem;min-width:320px}.head{background:var(--primary);color:#fff;padding:1rem;border-radius:8px}@keyframes f{50%{transform:translateY(-10px)}}
+:root {
+  --primary: #c41e3a;
+  --dark: #222;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  background-color: #f4f4f9;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: background-image 0.5s ease-in-out;
+}
+
+/* Sfondo della locandina attivo */
+body.has-poster {
+  background-image: url('../images/locandina.jfif'); /* Cambia in .jpg se necessario */
+}
+
+/* Pacco regalo in bianco e nero */
+.gift-box {
+  position: relative;
+  font-size: 6rem;
+  background: #fff;
+  border: 4px solid #000;
+  border-radius: 16px;
+  padding: 1.5rem;
+  cursor: pointer;
+  filter: grayscale(100%); /* Trasforma tutto il bottone in Bianco e Nero */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: float 3s ease-in-out infinite;
+  transition: transform 0.3s ease, opacity 0.5s ease;
+}
+
+.gift-box.hidden {
+  display: none;
+}
+
+/* Logo posizionato al centro sopra il pacco */
+.gift-logo {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #000;
+}
+
+/* Modale overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  place-items: center;
+}
+
+.overlay.show {
+  display: grid;
+}
+
+#tickets {
+  display: grid;
+  gap: 1rem;
+}
+
+.ticket {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  min-width: 320px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.head {
+  background: var(--primary);
+  color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+#close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 2rem;
+  background: transparent;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(-10px);
+  }
+}
