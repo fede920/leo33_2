@@ -8,7 +8,7 @@ const data = [
     title: 'SONO Metropolitan Fest 2026',
     location: '📍 FIERA DEL LEVANTE - ARENA DEL LEVANTE',
     tier: 'GA - TIER 1',
-    status: 'Ingresso valido - ore 20:00<br><span style="font-size: 12px;">del giorno sabato 05 settembre</span>',
+    status: 'Ingresso valido - ore 20:00<br><span style="font-size: 11px;">del giorno sabato 05 settembre</span>',
     pdf: 'pdf/biglietto1.pdf'
   },
   { 
@@ -20,7 +20,7 @@ const data = [
     title: 'SONO Metropolitan Fest 2026',
     location: '📍 FIERA DEL LEVANTE - ARENA DEL LEVANTE',
     tier: 'GA - TIER 1',
-    status: 'Ingresso valido - ore 20:00<br><span style="font-size: 12px;">del giorno sabato 05 settembre</span>',
+    status: 'Ingresso valido - ore 20:00<br><span style="font-size: 11px;">del giorno sabato 05 settembre</span>',
     pdf: 'pdf/biglietto2.pdf'
   }
 ];
@@ -31,19 +31,26 @@ const overlay = document.getElementById('overlay');
 const closeBtn = document.getElementById('close');
 const bgAudio = document.getElementById('bgAudio');
 
-giftBox.onclick = () => {
-  // 1. Carica e avvia l'audio
-  bgAudio.load();
-  bgAudio.volume = 0.8;
-  const playPromise = bgAudio.play();
-
-  if (playPromise !== undefined) {
-    playPromise.catch(error => {
-      console.log("Riproduzione audio non riuscita:", error);
-    });
+// Gestione avviamento audio sbloccato
+function startAudio() {
+  if (bgAudio) {
+    bgAudio.volume = 0.8;
+    const playPromise = bgAudio.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        console.log("Audio avviato con successo!");
+      }).catch(err => {
+        console.log("Audio in attesa di interazione dell'utente:", err);
+      });
+    }
   }
+}
 
-  // 2. Nasconde il regalo
+giftBox.onclick = () => {
+  // 1. Tenta di avviare l'audio
+  startAudio();
+
+  // 2. Nasconde il pacco regalo
   giftBox.classList.add('hidden');
 
   // 3. Mostra la locandina
@@ -102,28 +109,31 @@ giftBox.onclick = () => {
 
   ticketsContainer.appendChild(fragment);
 
-  // 5. Mostra l'overlay dopo 5 secondi
+  // 5. Mostra l'overlay con i biglietti dopo 5 secondi
   setTimeout(() => {
     overlay.classList.add('show');
     createConfetti();
   }, 5000);
 };
 
-// Funzione Tasto Chiudi (✕)
+// Tasto Chiudi (✕)
 closeBtn.onclick = (e) => {
-  e.stopPropagation(); // Evita interferenze di click
+  e.preventDefault();
+  e.stopPropagation();
 
-  // Nasconde l'overlay
+  // Nasconde overlay
   overlay.classList.remove('show');
   
-  // Rimuove la locandina
+  // Rimuove locandina
   document.body.classList.remove('has-poster');
 
-  // Ferma l'audio e lo riporta all'inizio
-  bgAudio.pause();
-  bgAudio.currentTime = 0;
+  // Stoppa audio
+  if (bgAudio) {
+    bgAudio.pause();
+    bgAudio.currentTime = 0;
+  }
 
-  // Mostra di nuovo il pacco regalo
+  // Torna al pacco regalo
   giftBox.classList.remove('hidden');
 };
 
