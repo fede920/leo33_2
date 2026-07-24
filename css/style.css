@@ -142,17 +142,17 @@ body.has-poster {
   border-radius: 50%;
 }
 
-/* --- OVERLAY & LAYOUT DESKTOP BIGLIETTI --- */
+/* --- OVERLAY & BIGLIETTI --- */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.88);
   backdrop-filter: blur(8px);
   display: none;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   z-index: 1000;
-  padding: 20px;
+  padding: 60px 15px 30px 15px; /* Spazio in alto per non coprire col tasto ✕ */
   overflow-y: auto;
 }
 
@@ -166,7 +166,7 @@ body.has-poster {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: stretch; /* Assicura altezza identica per entrambi i biglietti su Desktop */
+  align-items: stretch;
   gap: 25px;
 }
 
@@ -188,35 +188,59 @@ body.has-poster {
 
 .ticket-header {
   background: linear-gradient(135deg, #c41e3a 0%, #a01830 100%);
-  padding: 20px;
+  padding: 18px;
   color: white;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  min-height: 140px;
+  gap: 10px;
 }
 
-.ticket-header-left { flex: 1; }
-.ticket-date { font-size: 24px; font-weight: 900; margin-bottom: 6px; }
-.ticket-date-small { font-size: 12px; opacity: 0.9; margin-bottom: 10px; }
-.ticket-title { font-size: 16px; font-weight: 900; line-height: 1.2; }
-.ticket-location { font-size: 11px; margin-top: 8px; opacity: 0.95; }
+.ticket-header-left { 
+  flex: 1; 
+}
+
+.ticket-date { 
+  font-size: 22px; 
+  font-weight: 900; 
+  margin-bottom: 2px; 
+  line-height: 1.1;
+}
+
+.ticket-date-small { 
+  font-size: 12px; 
+  opacity: 0.9; 
+  margin-bottom: 8px; 
+}
+
+.ticket-title { 
+  font-size: 15px; 
+  font-weight: 900; 
+  line-height: 1.2; 
+}
+
+.ticket-location { 
+  font-size: 11px; 
+  margin-top: 6px; 
+  opacity: 0.95; 
+}
 
 .ticket-number-top {
   background: white;
   color: #c41e3a;
-  padding: 6px 12px;
+  padding: 6px 10px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 900;
   text-align: center;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .ticket-body {
   background: #2a2a2a;
   color: white;
-  padding: 20px;
+  padding: 18px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -227,13 +251,13 @@ body.has-poster {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 14px;
-  padding-bottom: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
   border-bottom: 1px solid #444;
 }
 
-.ticket-info-label { font-size: 11px; color: #999; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; }
-.ticket-info-value { font-size: 14px; font-weight: 900; color: white; }
+.ticket-info-label { font-size: 10px; color: #999; font-weight: bold; text-transform: uppercase; margin-bottom: 3px; }
+.ticket-info-value { font-size: 13px; font-weight: 900; color: white; }
 .ticket-info-column { flex: 1; }
 .ticket-info-column:nth-child(2) { flex: 1.5; }
 
@@ -242,7 +266,7 @@ body.has-poster {
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
-  padding-top: 12px;
+  padding-top: 10px;
   border-top: 1px solid #444;
 }
 
@@ -253,7 +277,6 @@ body.has-poster {
   font-weight: bold;
 }
 
-/* Pulsante Scarica PDF */
 .download-btn {
   background-color: var(--primary);
   color: #ffffff;
@@ -274,25 +297,22 @@ body.has-poster {
 /* TASTO CHIUDI (✕) */
 #close {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 15px;
+  right: 15px;
   background: white;
   border: none;
-  width: 45px;
-  height: 45px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  z-index: 1001;
-  transition: transform 0.2s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  z-index: 1002;
   color: #000;
 }
-
-#close:hover { transform: scale(1.1); }
 
 .confetti {
   position: fixed;
@@ -311,6 +331,7 @@ body.has-poster {
   50% { transform: translateY(-12px); }
 }
 
+/* ADATTAMENTO PER MOBILE */
 @media (max-width: 768px) {
   .tickets-content { 
     flex-direction: column; 
@@ -318,10 +339,10 @@ body.has-poster {
   }
   .ticket {
     width: 100%;
+    max-width: 100%;
   }
   .ticket-header { 
-    flex-direction: column; 
-    gap: 12px; 
-    min-height: auto;
+    flex-direction: row; /* Mantiene la disposizione orizzontale affinché la data rimanga in alto */
+    align-items: flex-start;
   }
 }
