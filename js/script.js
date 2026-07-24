@@ -8,7 +8,8 @@ const data = [
     title: 'SONO Metropolitan Fest 2026',
     location: '📍 FIERA DEL LEVANTE - ARENA DEL LEVANTE',
     tier: 'GA - TIER 1',
-    status: 'Ingresso valido - ore 20:00<br><span style="font-size: 12px;">del giorno sabato 05 settembre</span>'
+    status: 'Ingresso valido - ore 20:00<br><span style="font-size: 12px;">del giorno sabato 05 settembre</span>',
+    pdf: 'pdf/biglietto1.pdf'
   },
   { 
     n: 2, 
@@ -19,7 +20,8 @@ const data = [
     title: 'SONO Metropolitan Fest 2026',
     location: '📍 FIERA DEL LEVANTE - ARENA DEL LEVANTE',
     tier: 'GA - TIER 1',
-    status: 'Ingresso valido - ore 20:00<br><span style="font-size: 12px;">del giorno sabato 05 settembre</span>'
+    status: 'Ingresso valido - ore 20:00<br><span style="font-size: 12px;">del giorno sabato 05 settembre</span>',
+    pdf: 'pdf/biglietto2.pdf'
   }
 ];
 
@@ -27,15 +29,21 @@ const giftBox = document.getElementById('giftBox');
 const ticketsContainer = document.getElementById('tickets');
 const overlay = document.getElementById('overlay');
 const closeBtn = document.getElementById('close');
+const bgAudio = document.getElementById('bgAudio');
 
 giftBox.onclick = () => {
-  // 1. Nasconde il regalo
+  // 1. Nasconde il pacco regalo
   giftBox.classList.add('hidden');
 
-  // 2. Mostra lo sfondo della locandina
+  // 2. Fa apparire la locandina di sfondo
   document.body.classList.add('has-poster');
 
-  // 3. Genera il layout dei biglietti
+  // 3. Fa partire immediatamente la canzone "Aaron" di Paul Kalkbrenner
+  bgAudio.play().catch(err => {
+    console.log("Riproduzione audio bloccata dal browser:", err);
+  });
+
+  // 4. Prepara i biglietti con il link di download PDF
   ticketsContainer.innerHTML = '';
   const fragment = document.createDocumentFragment();
 
@@ -75,8 +83,9 @@ giftBox.onclick = () => {
             <div class="ticket-info-value">${x.status}</div>
           </div>
         </div>
-        <div class="ticket-info-row">
+        <div class="ticket-footer">
           <div class="ticket-number-bottom">TICKET #00${x.n}</div>
+          <a href="${x.pdf}" download class="download-btn">Scarica qui PDF 📄</a>
         </div>
       </div>
     `;
@@ -85,16 +94,27 @@ giftBox.onclick = () => {
 
   ticketsContainer.appendChild(fragment);
 
-  // 4. Timer 5 secondi prima della comparsa dell'overlay con i biglietti
+  // 5. Attende 5 secondi prima di mostrare l'overlay ed i coriandoli
   setTimeout(() => {
     overlay.classList.add('show');
     createConfetti();
   }, 5000);
 };
 
-// Pulsante Chiudi
+// Quando si clicca sulla ✕:
 closeBtn.onclick = () => {
+  // Hide overlay
   overlay.classList.remove('show');
+  
+  // Toglie la locandina
+  document.body.classList.remove('has-poster');
+
+  // Ferma e resetta l'audio
+  bgAudio.pause();
+  bgAudio.currentTime = 0;
+
+  // Ritorna al pacco regalo iniziale
+  giftBox.classList.remove('hidden');
 };
 
 // Generazione Coriandoli
