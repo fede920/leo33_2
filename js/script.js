@@ -12,10 +12,10 @@ giftBox.onclick = () => {
   // 1. Nasconde il pacco regalo
   giftBox.classList.add('hidden');
 
-  // 2. Fa apparire la locandina come sfondo del body
+  // 2. Mostra subito la locandina adattata alla schermata
   document.body.classList.add('has-poster');
 
-  // 3. Genera i biglietti nell'overlay
+  // 3. Prepara i biglietti nell'overlay
   ticketsContainer.innerHTML = '';
   const fragment = document.createDocumentFragment();
 
@@ -27,21 +27,21 @@ giftBox.onclick = () => {
         <h2>SONO Metropolitan Fest</h2>
         <strong>Biglietto #${x.n}</strong>
       </div>
-      <p><b>${x.name}</b></p>
-      <p><small>Sigillo: ${x.sig}</small></p>
+      <p style="font-size: 1.1rem; margin: 0.8rem 0;"><b>${x.name}</b></p>
+      <p style="color: #666; font-size: 0.9rem; margin: 0;">Sigillo: ${x.sig}</p>
     `;
     fragment.appendChild(ticketDiv);
   });
 
   ticketsContainer.appendChild(fragment);
 
-  // 4. Attende esattamente 5 secondi prima di far apparire i biglietti
+  // 4. Dopo 5 secondi esatti compaiono i biglietti
   setTimeout(() => {
     overlay.classList.add('show');
   }, 5000);
 };
 
-// Pulsante per chiudere i biglietti
+// Chiude l'overlay dei biglietti
 closeBtn.onclick = () => {
   overlay.classList.remove('show');
 };
