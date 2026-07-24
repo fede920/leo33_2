@@ -1,6 +1,11 @@
 :root {
   --primary: #c41e3a;
-  --dark: #222;
+  --dark: #111111;
+  --bg-color: #0f0f12;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
@@ -8,12 +13,13 @@ body {
   margin: 0;
   display: grid;
   place-items: center;
-  height: 100vh;
-  background-color: #f4f4f9;
+  min-height: 100vh;
+  min-height: 100dvh; /* Supporto per altezze dinamiche mobile */
+  background-color: var(--bg-color);
   background-position: center;
-  background-size: cover;
+  background-size: contain; /* Adatta l'intera locandina allo schermo senza tagliarla */
   background-repeat: no-repeat;
-  transition: background-image 0.8s ease-in-out;
+  transition: background-image 0.6s ease-in-out;
 }
 
 /* Sfondo della locandina attivo */
@@ -21,11 +27,11 @@ body.has-poster {
   background-image: url('../images/locandina.jfif');
 }
 
-/* Pulsante Pacco Regalo in B&N */
+/* --- DESIGN PACCO REGALO --- */
 .gift-box {
   position: relative;
-  width: 140px;
-  height: 140px;
+  width: 160px;
+  height: 160px;
   background: #ffffff;
   border: 4px solid #000000;
   border-radius: 20px;
@@ -33,51 +39,91 @@ body.has-poster {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
   animation: float 3s ease-in-out infinite;
-  transition: transform 0.3s ease, opacity 0.5s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   padding: 0;
+  outline: none;
 }
 
 .gift-box:hover {
-  transform: scale(1.05);
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
 .gift-box.hidden {
   display: none;
 }
 
-/* Icona SVG del Pacco Regalo */
-.gift-svg {
-  width: 100px;
-  height: 100px;
-  color: #000000;
+/* Nastri Neri */
+.ribbon-vertical {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  background-color: #000000;
 }
 
-/* Logo LB perfettamente centrato e integrato */
-.gift-logo {
+.ribbon-horizontal {
   position: absolute;
-  top: 58%;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 24px;
+  background-color: #000000;
+}
+
+/* Fiocco in alto */
+.ribbon-bow {
+  position: absolute;
+  top: -20px;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 38px;
-  height: 38px;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 25px;
+  border: 3px solid #000;
+  border-bottom: none;
+  border-radius: 25px 25px 0 0;
+  background: #fff;
+  z-index: 1;
+}
+
+/* Medaglione Logo LB */
+.logo-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.gift-logo {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 50%;
-  border: 2px solid #000000;
-  background-color: #ffffff;
-  z-index: 2;
 }
 
-/* Modale overlay */
+/* --- OVERLAY & BIGLIETTI --- */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(5px);
   display: none;
   place-items: center;
   z-index: 1000;
   padding: 1rem;
+  overflow-y: auto;
 }
 
 .overlay.show {
@@ -85,30 +131,34 @@ body.has-poster {
 }
 
 #tickets {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.5rem;
-  max-width: 90vw;
+  width: 100%;
+  max-width: 800px;
 }
 
 .ticket {
-  background: #fff;
-  border-radius: 12px;
+  background: #ffffff;
+  border-radius: 16px;
   padding: 1.5rem;
-  min-width: 280px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  width: 100%;
+  max-width: 340px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   text-align: center;
 }
 
 .head {
   background: var(--primary);
-  color: #fff;
+  color: #ffffff;
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: 10px;
   margin-bottom: 1rem;
 }
 
 .head h2 {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.4rem 0;
   font-size: 1.2rem;
 }
 
@@ -116,12 +166,17 @@ body.has-poster {
   position: fixed;
   top: 20px;
   right: 20px;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   background: transparent;
-  color: #fff;
+  color: #ffffff;
   border: none;
   cursor: pointer;
   z-index: 1001;
+  transition: transform 0.2s ease;
+}
+
+#close:hover {
+  transform: scale(1.2);
 }
 
 @keyframes float {
@@ -129,6 +184,6 @@ body.has-poster {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-12px);
   }
 }
